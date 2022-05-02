@@ -1,0 +1,14 @@
+###
+POST http://localhost:5000/api/v1/Vendor/new_vendor
+Content-Type: application/json
+
+{
+
+ 
+}
+
+###
+GET http://localhost:5000/api/v1/Admin/get_vendors
+
+###
+GET http://localhost:5000/api/v1/Admin/get_vendor/626fbce0aa52d5ba78e46b65

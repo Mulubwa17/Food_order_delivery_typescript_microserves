@@ -11,3 +11,10 @@ Content-Type: application/json
   "address": "4 fir road, lusaka"
  
 }
+
+###
+GET http://localhost:4000/api/v1/User/get_users
+
+###
+GET http://localhost:4000/api/v1/User/get_user/626fe0d9a2bcc82f906e7979
+

@@ -13,6 +13,7 @@ import { userSeedData } from "./seeders/user";
 import { deliverySeedData } from "./seeders/delivery";
 import { deliveryRoute } from "./routes/delivery";
 import { driverSeedData } from "./seeders/driver";
+import { driverRoute } from "./routes/driver";
 dotenv.config();
 
 
@@ -36,6 +37,7 @@ OrderSeedData();
 deliverySeedData();
 
 app.use("/api/v1/Admin", adminRoute);
+app.use("/api/v1/Driver", driverRoute);
 app.use("/api/v1/Order", orderRoute);
 app.use('/api/v1/Delivery', deliveryRoute)
 

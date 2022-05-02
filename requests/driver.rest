@@ -1,0 +1,14 @@
+###
+POST http://localhost:3000/api/v1/Driver/new_driver
+Content-Type: application/json
+
+{
+ 
+ 
+}
+
+###
+GET http://localhost:3000/api/v1/Admin/get_drivers
+
+###
+GET http://localhost:3000/api/v1/Driver/get_driver/626fc68c5183f5dfe6b0ce66

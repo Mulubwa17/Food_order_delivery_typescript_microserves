@@ -1,0 +1,13 @@
+###
+POST http://localhost:5000/api/v1/Food/new_food
+Content-Type: application/json
+
+{
+
+}
+
+###
+GET http://localhost:5000/api/v1/Food/get_foods
+
+###
+GET http://localhost:5000/api/v1/Food/get_food/626fbd430521a16a31127444

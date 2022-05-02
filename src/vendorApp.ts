@@ -12,7 +12,7 @@ import { foodRoute } from './routes/food';
 dotenv.config();
 
 
-const PORT = 4000;
+const PORT = 5000;
 const app: Application = express();
 
 vendorDB();
