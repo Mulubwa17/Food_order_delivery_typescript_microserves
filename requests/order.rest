@@ -1,0 +1,21 @@
+###
+POST http://localhost:3000/api/v1/Order/new_order
+Content-Type: application/json
+
+{
+
+"foodId": "626fa8b4654a84dc7694eb81",
+"customerId": "626fb4b7a9624e38095aa92d",
+"orderTime": "Mon May 02 2022 08:33:01 GMT+0200 (Central Africa Time)",
+"paid": true,
+"deliveryTime": "Mon May 02 2022 22:17:19 GMT+0200 (Central Africa Time)",
+"destinationAddress": "7155 Cheyanne Causeway",
+"orderReady": true
+
+}
+
+###
+GET http://localhost:3000/api/v1/Order/get_orders
+
+###
+GET http://localhost:3000/api/v1/Order/get_order/626fa8b4654a84dc7694eb81

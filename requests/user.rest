@@ -1,0 +1,13 @@
+###
+POST http://localhost:4000/api/v1/User/new_user
+Content-Type: application/json
+
+{
+  "email": "user@mail.com",
+  "firstName": "user",
+  "lastName": "tester",
+  "contact": "0974923302",
+  "password": "12345678",   
+  "address": "4 fir road, lusaka"
+ 
+}

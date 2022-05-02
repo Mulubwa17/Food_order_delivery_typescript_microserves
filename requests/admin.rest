@@ -1,0 +1,17 @@
+###
+POST http://localhost:3000/api/v1/Admin/new_admin
+Content-Type: application/json
+
+{
+  "email": "admin@mail.com",
+  "firstName": "admin",
+  "lastName": "tester",
+  "contact": "0974923301"
+ 
+}
+
+###
+GET http://localhost:3000/api/v1/Admin/get_admins
+
+###
+GET http://localhost:3000/api/v1/Admin/get_admin/626eecdc1389b15e6b24382d
