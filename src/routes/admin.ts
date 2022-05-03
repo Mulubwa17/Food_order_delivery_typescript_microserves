@@ -6,12 +6,12 @@ const router = express.Router();
 
 router.post('/new_admin', createAdmin)
 
-router.get('/get_admins',  getAdmins)
+router.get('/view_admins',  getAdmins)
 
-router.get('/get_admin/:id',  getAdmin)
+router.get('/view_admin/:id',  getAdmin)
 
-router.put('/update_admin/:id',  updateAdmin)
+router.put('/edit_admin/:id',  updateAdmin)
 
-router.delete('/delete_admin/:id',  deleteAdmin)
+router.delete('/remove_admin/:id',  deleteAdmin)
 
 export { router as adminRoute };

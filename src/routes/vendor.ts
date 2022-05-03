@@ -5,12 +5,12 @@ const router = express.Router();
 
 router.post('/new_vendor', createVendor)
 
-router.get('/get_vendors',  getVendors)
+router.get('/view_vendors',  getVendors)
 
-router.get('/get_vendor/:id',  getVendor)
+router.get('/view_vendor/:id',  getVendor)
 
-router.put('/update_vendor/:id',  updateVendor)
+router.put('/edit_vendor/:id',  updateVendor)
 
-router.delete('/delete_vendor/:id',  deleteVendor)
+router.delete('/remove_vendor/:id',  deleteVendor)
 
 export { router as venderRoute };

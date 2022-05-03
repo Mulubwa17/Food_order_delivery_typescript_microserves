@@ -5,12 +5,12 @@ const router = express.Router();
 
 router.post('/new_food', createFood)
 
-router.get('/get_foods',  getFoods)
+router.get('/view_foods',  getFoods)
 
-router.get('/get_food/:id',  getFood)
+router.get('/view_food/:id',  getFood)
 
-router.put('/update_food/:id',  updateFood)
+router.put('/edit_food/:id',  updateFood)
 
-router.delete('/delete_food/:id',  deleteFood)
+router.delete('/remove_food/:id',  deleteFood)
 
 export { router as foodRoute };

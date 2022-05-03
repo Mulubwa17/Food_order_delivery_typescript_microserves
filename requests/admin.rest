@@ -11,7 +11,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/api/v1/Admin/get_admins
+GET http://localhost:3000/api/v1/Admin/view_admins
 
 ###
-GET http://localhost:3000/api/v1/Admin/get_admin/626eecdc1389b15e6b24382d
+GET http://localhost:3000/api/v1/Admin/view_admin/626eecdc1389b15e6b24382d

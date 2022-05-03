@@ -7,4 +7,4 @@ A food order and delivery service built in Typescript with cahcing and message q
 - To run the vendor microservice : nodemon/node src/vendorApp.ts
 
 ###
-- Test Request can be found in Requests folder
+- Test Requests can be found in Requests folder

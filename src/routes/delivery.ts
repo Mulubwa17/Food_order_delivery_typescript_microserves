@@ -11,12 +11,12 @@ const router = express.Router();
 
 router.post("/new_delivery", createDelivery);
 
-router.get("/get_deliverys", getDeliverys);
+router.get("/view_deliverys", getDeliverys);
 
-router.get("/get_delivery/:id", getDelivery);
+router.get("/view_delivery/:id", getDelivery);
 
-router.put("/update_delivery/:id", updateDelivery);
+router.put("/edit_delivery/:id", updateDelivery);
 
-router.delete("/delete_delivery/:id", deleteDelivery);
+router.delete("/remove_delivery/:id", deleteDelivery);
 
 export { router as deliveryRoute };

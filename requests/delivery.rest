@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/api/v1/Delivery/get_deliverys
+GET http://localhost:3000/api/v1/Delivery/view_deliverys
 
 ###
-GET http://localhost:3000/api/v1/Delivery/get_delivery/626fc68c5183f5dfe6b0cf40
+GET http://localhost:3000/api/v1/Delivery/view_delivery/626fc68c5183f5dfe6b0cf40

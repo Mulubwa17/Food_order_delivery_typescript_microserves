@@ -41,7 +41,15 @@ app.use("/api/v1/Driver", driverRoute);
 app.use("/api/v1/Order", orderRoute);
 app.use('/api/v1/Delivery', deliveryRoute)
 
+app.get("/", (req, res) => {
+  res.status(200).send({
+    status: "success",
+    message: "Welcome to the admin app",
+  });
+});
 
 app.listen(PORT, () => {
   console.log(`Admin App started on port ${PORT}`);
 });
+
+export default app;

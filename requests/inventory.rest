@@ -7,7 +7,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:5000/api/v1/Order/get_inventorys
+GET http://localhost:5000/api/v1/Order/view_inventorys
 
 ###
-GET http://localhost:5000/api/v1/Order/get_inventory/626fa8b4654a84dc7694eb81
+GET http://localhost:5000/api/v1/Order/view_inventory/626fa8b4654a84dc7694eb81

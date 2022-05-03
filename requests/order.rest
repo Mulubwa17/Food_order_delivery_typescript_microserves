@@ -15,7 +15,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/api/v1/Order/get_orders
+GET http://localhost:3000/api/v1/Order/view_orders
 
 ###
-GET http://localhost:3000/api/v1/Order/get_order/626fa8b4654a84dc7694eb81
+GET http://localhost:3000/api/v1/Order/view_order/626fa8b4654a84dc7694eb81

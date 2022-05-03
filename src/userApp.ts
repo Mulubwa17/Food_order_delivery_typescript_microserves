@@ -23,7 +23,16 @@ userSeedData();
 
 app.use('/api/v1/User',userRoute)
 
+app.get("/", (req, res) => {
+    res.status(200).send({
+      status: "success",
+      message: "Welcome to the user app",
+    });
+  });
+
 app.listen(PORT, () => {
     console.log(`User App started on port ${PORT}`);
 }
 );
+
+export default app;

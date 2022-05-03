@@ -2,11 +2,8 @@ import faker from '@faker-js/faker';
 import { Driver } from '../models/driver';
 import { Delivery } from '../models/delivery';
 import { Order } from '../models/order';
-import { Vendor } from '../models/vendor';
 
-async function returnsQueryBuilder() {
-  return await Vendor.find();
-}
+
 
 async function returnsQueryBuilderOrder() {
   return await Order.find();
@@ -21,7 +18,6 @@ async function returnsQueryBuilderDriver() {
 export const deliverySeedData = async () => {
   try {
     const Deliverys = [];
-    var queryArray = await returnsQueryBuilder();
     var queryArrayDriver = await returnsQueryBuilderDriver();
     var queryArrayOrder = await returnsQueryBuilderOrder();
     for (let i = 0; i < 10; i++) {
@@ -32,7 +28,6 @@ export const deliverySeedData = async () => {
           driverId: queryArrayDriver[j]["id"],
           delivered: true,
           delayed: true,
-          vendorId: queryArray[j]["id"],
         }
         Deliverys.push(newDelivery)
       }

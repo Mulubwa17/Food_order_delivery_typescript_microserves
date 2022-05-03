@@ -5,12 +5,12 @@ const router = express.Router();
 
 router.post('/new_driver', createDriver)
 
-router.get('/get_drivers',  getDrivers)
+router.get('/view_drivers',  getDrivers)
 
-router.get('/get_driver/:id',  getDriver)
+router.get('/view_driver/:id',  getDriver)
 
-router.put('/update_driver/:id',  updateDriver)
+router.put('/edit_driver/:id',  updateDriver)
 
-router.delete('/delete_driver/:id',  deleteDriver)
+router.delete('/remove_driver/:id',  deleteDriver)
 
 export { router as driverRoute };

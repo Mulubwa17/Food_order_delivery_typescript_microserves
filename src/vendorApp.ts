@@ -31,7 +31,16 @@ app.use('/api/v1/Vendor', venderRoute)
 app.use('/api/v1/Inventory', inventoryRoute);
 app.use('/api/v1/Food', foodRoute)
 
+app.get("/", (req, res) => {
+    res.status(200).send({
+      status: "success",
+      message: "Welcome to the vendor app",
+    });
+  });
+
 app.listen(PORT, () => {
     console.log(`Vendor App started on port ${PORT}`);
 }
 );
+
+export default app;

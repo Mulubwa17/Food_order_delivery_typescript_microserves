@@ -8,7 +8,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:5000/api/v1/Admin/get_vendors
+GET http://localhost:5000/api/v1/Admin/view_vendors
 
 ###
-GET http://localhost:5000/api/v1/Admin/get_vendor/626fbce0aa52d5ba78e46b65
+GET http://localhost:5000/api/v1/Admin/view_vendor/626fbce0aa52d5ba78e46b65

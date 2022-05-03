@@ -8,7 +8,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/api/v1/Admin/get_drivers
+GET http://localhost:3000/api/v1/Admin/view_drivers
 
 ###
-GET http://localhost:3000/api/v1/Driver/get_driver/626fc68c5183f5dfe6b0ce66
+GET http://localhost:3000/api/v1/Driver/view_driver/626fc68c5183f5dfe6b0ce66

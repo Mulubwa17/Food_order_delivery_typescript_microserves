@@ -18,7 +18,7 @@ export const isCached =  async (req: Request, res: Response, next: NextFunction)
   try {
     const id  = req.params._id;
 
-  await client  .get(id)
+  await client.get(id)
   .then((data: any) => {
     if (data) {
       res.send(data);

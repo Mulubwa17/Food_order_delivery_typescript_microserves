@@ -5,12 +5,12 @@ const router = express.Router();
 
 router.post('/new_inventory', createInventory)
 
-router.get('/get_inventorys',  getInventorys)
+router.get('/view_inventorys',  getInventorys)
 
-router.get('/get_inventory/:id',  getInventory)
+router.get('/view_inventory/:id',  getInventory)
 
-router.put('/update_inventory/:id',  updateInventory)
+router.put('/edit_inventory/:id',  updateInventory)
 
-router.delete('/delete_inventory/:id',  deleteInventory)
+router.delete('/remove_inventory/:id',  deleteInventory)
 
 export { router as inventoryRoute };
