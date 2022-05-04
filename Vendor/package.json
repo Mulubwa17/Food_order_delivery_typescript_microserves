@@ -1,0 +1,43 @@
+{
+  "name": "food-delivery",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc -p .",
+    "dev": "nodemon ./src/server.ts",
+    "start": "node ./dist/server.js",
+    "test:unit": "mocha --check-leaks -r ts-node/register -r tsconfig-paths/register \"src/tests/unit/*.test.ts\"",
+    "test:integration": "mocha --check-leaks -r ts-node/register -r tsconfig-paths/register  \"src/tests/integration/*.test.ts\""
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^6.2.0",
+    "@types/chai": "^4.3.1",
+    "@types/cors": "^2.8.12",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.13",
+    "@types/helmet": "^4.0.0",
+    "@types/jest": "^27.4.1",
+    "@types/jsonwebtoken": "^8.5.8",
+    "@types/mocha": "^9.1.1",
+    "@types/mongoose": "^5.11.97",
+    "@types/node": "^17.0.30",
+    "@types/supertest": "^2.0.12",
+    "chai": "^4.3.6",
+    "mocha": "^10.0.0",
+    "supertest": "^6.2.3",
+    "ts-node": "^10.7.0",
+    "tsconfig-paths": "^4.0.0",
+    "typescript": "^4.6.4"
+  },
+  "dependencies": {
+    "bull": "^4.8.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.1",
+    "helmet": "^5.0.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.3.1",
+    "redis": "^4.0.6"
+  }
+}
