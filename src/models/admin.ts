@@ -1,5 +1,6 @@
 // admin.model.ts
 import { Schema, model } from "mongoose";
+import { NewAdminParams } from "../controllers/admin/types";
 
 // Create the interface
 interface IAdmin {
@@ -49,3 +50,12 @@ const AdminSchema = new Schema<IAdmin>(
 
 // Create and export admin model
 export const Admin = model<IAdmin>("Admin", AdminSchema);
+
+export const getAdminsByEmail= async(email:string):Promise<IAdmin>=>{
+   return Admin.findOne({email})
+}
+
+export const insertAdmin =async (params:NewAdminParams) => {
+  const newAdmin = new Admin({ ...params});
+  return  newAdmin.save();
+}

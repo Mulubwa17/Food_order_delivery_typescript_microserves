@@ -1,10 +1,17 @@
-import express from 'express';
-import { createAdmin, deleteAdmin, getAdmin, getAdmins, updateAdmin } from '../controllers/adminController';
+import express,{  Request, Response} from 'express';
+import { createAdmin, deleteAdmin, getAdmin, getAdmins, updateAdmin } from '../controllers/admin/adminController';
 // import { isCached, isCached1 } from '../middlewares/cache';
 
 const router = express.Router();
 
-router.post('/new_admin', createAdmin)
+router.post('/new_admin', async (request:Request, response: Response)=>{
+    try {
+        const { firstName, lastName, contact, email}= request.body
+        const response= await createAdmin({firstName,lastName,contact,email})
+    } catch (error) {
+        
+    }
+})
 
 router.get('/get_admins',  getAdmins)
 

@@ -1,27 +1,27 @@
 import { Request, Response, NextFunction } from "express";
 import { nextTick } from "process";
-import { Admin } from "../models/admin";
+import { Admin, getAdmins, getAdminsByEmail, insertAdmin } from "../../models/admin";
+import { NewAdminParams, NewAdminResponse, StatusCodes } from "./types";
 
-export const createAdmin = async (req: Request, res: Response) => {
+
+export const createAdmin = async (newAdaminParams: NewAdminParams ):Promise<NewAdminResponse> => {
   try {
-    const { firstName, lastName, email, contact } = req.body;
-    const admin = await Admin.findOne({ email });
-    if (admin) {
-      return res.status(404).json({ error: "Admin already exists!" });
+    const {email} = newAdaminParams
+    const admins = await getAdminsByEmail(email)
+    if (admins) {
+      return { message:'Not found', status:StatusCodes.ERROR}
     }
-    const newAdmin = new Admin({ firstName, lastName, email, contact });
-
-    await newAdmin.save();
-    res.status(200).json({ data: newAdmin, message: "Admin created" });
+    const newAdmin = await insertAdmin(newAdaminParams)
+    return { message:'Created', status:StatusCodes.SUCESSS, data:newAdmin}
     console.log(newAdmin);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "something went wrong" });
+    return { message:'Something went wrong ', status:StatusCodes.ERROR}
   }
 };
 
 export const getAdmins = async (req: Request, res: Response) => {
-  const admins = await Admin.find({})
+  const admins = await getAdminsByEmail()
   
   res.status(200).send(admins);
 }
