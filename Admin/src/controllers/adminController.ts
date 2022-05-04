@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { nextTick } from "process";
+
 import { Admin } from "../models/admin";
 
 export const createAdmin = async (req: Request, res: Response) => {

@@ -1,11 +1,4 @@
 import { Response, Request, NextFunction } from 'express';
-// import { nextTick } from 'process';
-
-
-// const redis = require('redis');
-// const client = redis.createClient({ socket: { port: 6379 } });
-// client.on('error', (err: any) => console.log('Redis Client Error', err));
-// client.connect();
 
 import { createClient } from 'redis';
 

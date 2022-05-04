@@ -1,14 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import { Order } from "../models/order";
-import * as redis from "redis";
 import { createNewOrder } from "../queues/order-queue";
 import { User } from "../../../User/src/models/user";
 import { Food } from "../../../Vendor/src/models/food";
+import { client } from "../config/redis";
 
-const client = redis.createClient({
-  url: "redis://127.0.0.1:6379",
-  legacyMode: true,
-});
+
 
 export const createOrder = async (req: Request, res: Response) => {
   try {
@@ -55,6 +52,7 @@ export const getOrder = async (req: Request, res: Response, next:NextFunction) =
     const order = await Order.findOne({ id });
 
     client.setEx(id, 1440, JSON.stringify(order));
+
     if (!order) {
       res.status(404).send({ message: "Order not found" });
     }

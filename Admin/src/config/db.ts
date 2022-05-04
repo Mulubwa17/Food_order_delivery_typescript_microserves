@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import mongoose from "mongoose";
 dotenv.config();
 
-const MONGO_URI: string = 'mongodb://localhost:27017/admin_control';
+const MONGO_URI = process.env.MONGO_URI ||'';
 
 export const adminDb = () => {
 mongoose.connect(MONGO_URI, (err: any) => {
