@@ -1,6 +1,7 @@
 // order.model.ts
 import mongoose from 'mongoose';
 import { Schema, model,Types } from 'mongoose';
+import { createNewOrder, updateOrderDetails } from '../controllers/order.types';
 
 const db2 = mongoose.createConnection('mongodb://localhost:27017/customer');
 
@@ -65,3 +66,26 @@ const OrderSchema = new Schema<IOrder>({
 
 // Create and export order model
 export const Order = model<IOrder>("Order", OrderSchema);
+
+export const insertOrder =async (params:createNewOrder) => {
+  const newOrder = new Order({ ...params});
+  return  newOrder.save();
+ } 
+
+export const getOrderById= async(id:string):Promise<IOrder>=>{
+  
+ return Order.findOne({id}) as any;
+  
+}
+
+export const getAllOrders= async() => {
+  return Order.find({}) as any;
+}
+
+export const updateOrder = async (id: string,params:updateOrderDetails):Promise<IOrder> => {
+  return Order.findOneAndUpdate({ id }, { ...params }, { new: true }) as any;
+}
+
+export const deleteOrder = async (id: string):Promise<IOrder> => {
+  return Order.findOneAndDelete({ id }) as any;
+}

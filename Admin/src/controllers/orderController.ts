@@ -1,95 +1,50 @@
-import { Request, Response, NextFunction } from "express";
-import { Order } from "../models/order";
-import { createNewOrder } from "../queues/order-queue";
-import { User } from "../../../User/src/models/user";
-import { Food } from "../../../Vendor/src/models/food";
-import { client } from "../config/redis";
+import { createNewOrder, createNewOrderResponse, messages, updateOrderDetails } from "./order.types";
+import { Order, insertOrder, getAllOrders, getOrderById, updateOrder, deleteOrder } from "../models/order";
 
 
 
-export const createOrder = async (req: Request, res: Response) => {
-  try {
-    const {  
-      foodId,
-      customerId,
-      orderTime,
-      deliveryTime,
-      paid,
-      destinationAddress,
-      orderReady } = req.body;
-   
-    const newOrder = new Order({
-      foodId,
-      customerId,
-      orderTime,
-      deliveryTime,
-      paid,
-      destinationAddress,
-      orderReady,
-
-    });
-
-    await newOrder.save();
-
-    await createNewOrder(newOrder);
-    res.status(200).send({ data: newOrder, message: "Order created" });
+export const createOrder = async (createNewOrder: createNewOrder):Promise<createNewOrderResponse> => {
+ 
+    const newOrder = await insertOrder(createNewOrder)
     console.log(newOrder);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({ error: "something went wrong" });
-  }
+    return { message:messages.created, data:newOrder}
 };
 
-export const getOrders = async (req: Request, res: Response) => {
-  const orders = await Order.find({}).populate({ path: 'customerId', model: User }).populate({ path: 'foodId', model: Food });
-client.setEx('orders', 1440, JSON.stringify(orders));
-  res.status(200).send(orders);
-};
+export const getOrders = async () => {
+  const orders = await getAllOrders();
+  
+  return {orders};
+}
 
-export const getOrder = async (req: Request, res: Response, next:NextFunction) => {
-  try {
-    const id = req.params._id;
-    const order = await Order.findOne({ id });
+export const getOrderProfile = async ( id: string):Promise<createNewOrderResponse> => {
 
-    client.setEx(id, 1440, JSON.stringify(order));
+    const order = await getOrderById( id );
 
     if (!order) {
-      res.status(404).send({ message: "Order not found" });
+      return {message: messages.notFound};
     }
-    res.status(200).send({ data: order });
-  } catch (error) {
-    next(error);
-  }
-};
+   
+    return {message: messages.found, data:order}
 
-export const updateOrder = async (req: Request, res: Response) => {
-  try {
-    const order = Order.findOneAndUpdate(
-      { id: req.params._id },
-      req.body,
-      { new: true },
-      (err, order) => {
-        if (err) {
-          res.status(404).send({ message: "Order not found" });
-        }
-        res.status(200).send({ data: order });
+}
+
+export const updateOrderProfile = async (id:string,updateOrderDetails:updateOrderDetails):Promise<createNewOrderResponse> => {
+  
+    const order = await updateOrder(id,updateOrderDetails);
+      if (!order) {
+        return {message: messages.notFound};
       }
-    );
-  } catch (error) {
-    res.status(500).send({ message: "Something went wrong,try again" });
-  }
-};
+      return {message: messages.updated, data:order}
+    
 
-export const deleteOrder = async (req: Request, res: Response) => {
-  try {
-    const order = await Order.deleteOne({ id: req.params._id });
+}
+
+export const deleteOrderProfile = async (id:string):Promise<createNewOrderResponse> => {
+
+    const order = await deleteOrder(id);
     if (!order) {
-      res.status(404).send({ message: "Order not found" });
+      return {message: messages.notFound};
     }
-    res
-      .status(200)
-      .send({ data: order, message: "Order successfully deleted!" });
-  } catch (error) {
-    res.status(500).send({ message: "Something went wrong,try again" });
-  }
-};
+   return {message: messages.deleted, data:order}
+
+}

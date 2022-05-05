@@ -1,5 +1,6 @@
 // admin.model.ts
 import { Schema, model } from "mongoose";
+import { createNewAdmin, updateAdminDetails } from "../controllers/admin.types";
 
 // Create the interface
 interface IAdmin {
@@ -49,3 +50,33 @@ const AdminSchema = new Schema<IAdmin>(
 
 // Create and export admin model
 export const Admin = model<IAdmin>("Admin", AdminSchema);
+
+export const insertAdmin =async (params:createNewAdmin) => {
+  const newAdmin = new Admin({ ...params});
+  return  newAdmin.save();
+ } 
+
+export const getAdminByEmail= async(email:string):Promise<IAdmin>=>{
+  
+ return Admin.findOne({email}) as any;
+  
+}
+
+export const getAdminById= async(id:string):Promise<IAdmin>=>{
+  
+ return Admin.findOne({id}) as any;
+  
+}
+
+export const getAllAdmins= async() => {
+  return Admin.find({}) as any;
+}
+
+export const updateAdmin = async (id: string, params:updateAdminDetails):Promise<IAdmin> => {
+  return Admin.findOneAndUpdate({ id }, {...params}, { new: true }) as any;
+}
+
+export const deleteAdmin = async (id: string):Promise<IAdmin> => {
+  return Admin.findOneAndDelete({ id }) as any;
+}
+

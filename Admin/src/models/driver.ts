@@ -1,5 +1,6 @@
 // driver.model.ts
 import { Schema, model } from 'mongoose';
+import { createNewDriver, updateDriverDetails } from '../controllers/driver.types';
 
 // Create the interface
 interface IDriver {
@@ -62,3 +63,32 @@ const DriverSchema = new Schema<IDriver>({
 
 // Create and export driver model
 export const Driver = model<IDriver>("Driver", DriverSchema);
+
+export const insertDriver =async (params:createNewDriver) => {
+  const newDriver = new Driver({ ...params});
+  return  newDriver.save();
+ } 
+
+export const getDriverByContact= async(contact:string):Promise<IDriver>=>{
+  
+ return Driver.findOne({contact}) as any;
+  
+}
+
+export const getDriverById= async(id:string):Promise<IDriver>=>{
+  
+ return Driver.findOne({id}) as any;
+  
+}
+
+export const getAllDrivers= async() => {
+  return Driver.find({}) as any;
+}
+
+export const updateDriver = async (id: string, params:updateDriverDetails):Promise<IDriver> => {
+  return Driver.findOneAndUpdate({ id }, { ...params }, { new: true }) as any;
+}
+
+export const deleteDriver = async (id: string):Promise<IDriver> => {
+  return Driver.findOneAndDelete({ id }) as any;
+}

@@ -1,69 +1,55 @@
-import { Request, Response, NextFunction } from "express";
+import { createNewAdmin, createNewAdminResponse, messages, updateAdminDetails } from "./admin.types";
+import { Admin, insertAdmin,getAdminByEmail, getAllAdmins, getAdminById, updateAdmin, deleteAdmin } from "../models/admin";
 
-import { Admin } from "../models/admin";
 
-export const createAdmin = async (req: Request, res: Response) => {
-  try {
-    const { firstName, lastName, email, contact } = req.body;
-    const admin = await Admin.findOne({ email });
+
+export const createAdmin = async (createNewAdmin: createNewAdmin):Promise<createNewAdminResponse> => {
+ 
+    const { email} = createNewAdmin;
+    const admin = await getAdminByEmail(email);
     if (admin) {
-      return res.status(404).json({ error: "Admin already exists!" });
+      return  {message: messages.duplicate};
     }
-    const newAdmin = new Admin({ firstName, lastName, email, contact });
-
-    await newAdmin.save();
-    res.status(200).json({ data: newAdmin, message: "Admin created" });
+    const newAdmin = await insertAdmin(createNewAdmin)
     console.log(newAdmin);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "something went wrong" });
-  }
+    return { message:messages.created, data:newAdmin}
 };
 
-export const getAdmins = async (req: Request, res: Response) => {
-  const admins = await Admin.find({})
+export const getAdmins = async () => {
+  const admins = await getAllAdmins();
   
-  res.status(200).send(admins);
+  return {admins};
 }
 
-export const getAdmin = async ( req: Request, res: Response, next:NextFunction) => {
-  try {
-    const id = req.params._id;
-    const admin = await Admin.findOne({ id });
+export const getAdminProfile = async ( id: string):Promise<createNewAdminResponse> => {
 
-    if (!Admin) {
-      res.status(404).send({ message: "Admin not found" });
-    }
-    res.status(200).send({ data: admin });
+    const admin = await getAdminById( id );
 
-  } catch (error) {
-   next(error);
-}
-}
-
-export const updateAdmin = async (req: Request, res: Response) => {
-  try {
-    const admin = Admin.findOneAndUpdate({ id: req.params._id }, req.body, { new: true }, (err, admin) => {
-      if (err) {
-        res.status(404).send({ message: "Admin not found" });
-      }
-      res.status(200).send({ data: admin });
-    })
-  } catch (error) {
-    res.status(500).send({ message: "Something went wrong,try again" })
-  }
-}
-
-export const deleteAdmin = async (req: Request, res: Response) => {
-  try {
-    const admin = await Admin.deleteOne({ id: req.params._id })
     if (!admin) {
-      res.status(404).send({ message: "Admin not found" });
+      return {message: messages.notFound};
     }
-    res.status(200).send({ data: admin, message: "Admin successfully deleted!" });
+   
+    return {message: messages.found, data:admin}
 
+}
 
-  } catch (error) {
-    res.status(500).send({ message: "Something went wrong,try again" })
-  }
+export const updateAdminProfile = async (id:string,updateAdminDetails:updateAdminDetails):Promise<createNewAdminResponse> => {
+  
+    const admin = await updateAdmin(id,updateAdminDetails);
+      if (!admin) {
+        return {message: messages.notFound};
+      }
+      return {message: messages.updated, data:admin}
+    
+
+}
+
+export const deleteAdminProfile = async (id:string):Promise<createNewAdminResponse> => {
+
+    const admin = await deleteAdmin(id);
+    if (!admin) {
+      return {message: messages.notFound};
+    }
+   return {message: messages.deleted, data:admin}
+
 }

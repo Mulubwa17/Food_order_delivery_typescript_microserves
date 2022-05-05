@@ -1,4 +1,4 @@
-import faker from '@faker-js/faker';
+
 import { Driver } from '../models/driver';
 import { Delivery } from '../models/delivery';
 import { Order } from '../models/order';

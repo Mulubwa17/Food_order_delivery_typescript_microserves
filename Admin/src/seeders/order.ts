@@ -1,27 +1,18 @@
 import faker from "@faker-js/faker";
-import { User } from "../../../User/src/models/user";
-import { Food } from "../../../Vendor/src/models/food";
 import { Order } from "../models/order";
 
 
-async function returnsQueryBuilder() {
-  return await User.find()
-}
-async function returnsQueryBuilderfood() {
-  return await Food.find()
-}
 
 
-export const OrderSeedData = async () => {
+
+export const orderSeedData = async () => {
   try {
     const Orders = [];
-    var queryArray = await returnsQueryBuilder();
-    var queryArrayfood = await returnsQueryBuilderfood();
     for (let i = 0; i < 10; i++) {
-      for (let j = 1; j < 10; j++) {
+       {
         const newOrder = {
-          foodId: queryArrayfood[j]["id"],
-          customerId: queryArray[j]["id"],
+          foodId: "626fbd430521a16a31127445",
+          customerId: "626fe0d9a2bcc82f906e797a",
           orderTime: faker.date.recent(),
           deliveryTime: faker.date.soon(),
           paid: true,
