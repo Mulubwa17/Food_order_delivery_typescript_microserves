@@ -3,16 +3,16 @@ import express, {Application} from 'express';
 import cors from "cors";
 import helmet from "helmet";
 import { vendorDb } from './config/db';
-import { venderRoute } from './routes/vendor';
 import { vendorSeedData } from './seeders/vendor';
 import { inventorySeedData } from './seeders/inventory';
 import { foodSeedData } from './seeders/food';
+import {vendorRoute} from './routes/vendor';
 import { inventoryRoute } from './routes/inventory';
 import { foodRoute } from './routes/food';
 dotenv.config();
 
 
-const PORT = 5000;
+const PORT = 6000;
 const app: Application = express();
 
 vendorDb();
@@ -27,7 +27,7 @@ vendorSeedData();
 inventorySeedData();
 foodSeedData();
 
-app.use('/api/v1/Vendor', venderRoute)
+app.use('/api/v1/Vendor', vendorRoute)
 app.use('/api/v1/Inventory', inventoryRoute);
 app.use('/api/v1/Food', foodRoute)
 

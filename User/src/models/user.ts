@@ -1,5 +1,6 @@
 // user.model.ts
 import { Schema, model } from "mongoose";
+import { createNewUser, updateUserDetails } from "../controllers/user.types";
 
 // Create the interface
 interface IUser {
@@ -54,3 +55,32 @@ const UserSchema = new Schema<IUser>(
 
 // Create and export user model
 export const User = model<IUser>("User", UserSchema);
+
+export const insertUser =async (params:createNewUser) => {
+  const newUser = new User({ ...params});
+  return  newUser.save();
+ } 
+
+export const getUserByEmail= async(email:string):Promise<IUser>=>{
+  
+ return User.findOne({email}) as any;
+  
+}
+
+export const getUserById= async(id:string):Promise<IUser>=>{
+  
+ return User.findOne({id}) as any;
+  
+}
+
+export const getAllUsers= async() => {
+  return User.find({}) as any;
+}
+
+export const updateUser = async (id: string,params:updateUserDetails):Promise<IUser> => {
+  return User.findOneAndUpdate({ id }, { ...params }, { new: true }) as any;
+}
+
+export const deleteUser = async (id: string):Promise<IUser> => {
+  return User.findOneAndDelete({ id }) as any;
+}

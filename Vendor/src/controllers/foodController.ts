@@ -1,79 +1,55 @@
-import { Request, Response, NextFunction } from "express";
-import * as redis from "redis";
-import { Food } from "../models/food";
+import { createNewFood, createNewFoodResponse, messages, updateFoodDetails } from "./food.types";
+import {  insertFood,getFoodByEmail, getAllFoods, getFoodById, updateFood, deleteFood } from "../models/food";
 
 
-export const createFood = async (req: Request, res: Response) => {
-  try {
-    const { name, description, category, rating, price,vendorId } = req.body;
-  
-    const newFood = new Food({
-      name,
-      description,
-      category,
-      rating,
-      price,
-      vendorId,
-    });
 
-    await newFood.save();
-    res.status(200).send({ data: newFood, message: "Food created" });
+export const createFood = async (createNewFood: createNewFood):Promise<createNewFoodResponse> => {
+ 
+    const { name} = createNewFood;
+    const food = await getFoodByEmail(name);
+    if (food) {
+      return  {message: messages.duplicate};
+    }
+    const newFood = await insertFood(createNewFood)
     console.log(newFood);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({ error: "something went wrong" });
-  }
+    return { message:messages.created, data:newFood}
 };
 
-export const getFoods = async (req: Request, res: Response) => {
-  const foods = await Food.find({}).populate("vendorId");
+export const getFoods = async () => {
+  const foods = await getAllFoods();
+  
+  return {foods};
+}
 
-  res.status(200).send(foods);
-};
+export const getFoodProfile = async ( id: string):Promise<createNewFoodResponse> => {
 
-export const getFood = async (req: Request, res: Response, next:NextFunction) => {
-  try {
-    const id = req.params._id;
-    const food = await Food.findOne({ id });
-
+    const food = await getFoodById( id );
 
     if (!food) {
-      res.status(404).send({ message: "Food not found" });
+      return {message: messages.notFound};
     }
-    res.status(200).send({ data: food });
-  } catch (error) {
-    next(error);
-  }
-};
+   
+    return {message: messages.found, data:food}
 
-export const updateFood = async (req: Request, res: Response) => {
-  try {
-    const food = Food.findOneAndUpdate(
-      { id: req.params._id },
-      req.body,
-      { new: true },
-      (err, food) => {
-        if (err) {
-          res.status(404).send({ message: "Food not found" });
-        }
-        res.status(200).send({ data: food });
+}
+
+export const updateFoodProfile = async (id:string,updateFoodDetails:updateFoodDetails):Promise<createNewFoodResponse> => {
+
+    const food = await updateFood(id,updateFoodDetails);
+      if (!food) {
+        return {message: messages.notFound};
       }
-    );
-  } catch (error) {
-    res.status(500).send({ message: "Something went wrong,try again" });
-  }
-};
+      return {message: messages.updated, data:food}
+    
 
-export const deleteFood = async (req: Request, res: Response) => {
-  try {
-    const food = await Food.deleteOne({ id: req.params._id });
+}
+
+export const deleteFoodProfile = async (id:string):Promise<createNewFoodResponse> => {
+
+    const food = await deleteFood(id);
     if (!food) {
-      res.status(404).send({ message: "Food not found" });
+      return {message: messages.notFound};
     }
-    res
-      .status(200)
-      .send({ data: food, message: "Food successfully deleted!" });
-  } catch (error) {
-    res.status(500).send({ message: "Something went wrong,try again" });
-  }
-};
+   return {message: messages.deleted, data:food}
+
+}

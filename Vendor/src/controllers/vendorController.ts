@@ -1,81 +1,55 @@
-import { Request, Response, NextFunction } from "express";
-import { Vendor } from "../models/vendor";
+import { createNewVendor, createNewVendorResponse, messages, updateVendorDetails } from "./vendor.types";
+import { insertVendor,getVendorByEmail, getAllVendors, getVendorById, updateVendor, deleteVendor } from "../models/vendor";
 
 
-export const createVendor = async (req: Request, res: Response) => {
-  try {
-    const { name, proprietor, email, contact, password, address } = req.body;
-    const vendor = await Vendor.findOne({ email });
+
+export const createVendor = async (createNewVendor: createNewVendor):Promise<createNewVendorResponse> => {
+
+    const { email} = createNewVendor;
+    const vendor = await getVendorByEmail(email);
     if (vendor) {
-      return res.status(404).send({ error: "Vendor already exists!" });
+      return  {message: messages.duplicate};
     }
-    const newVendor = new Vendor({
-      name,
-      proprietor,
-      email,
-      contact,
-      password,
-      address,
-    });
-
-    await newVendor.save();
-    res.status(200).send({ data: newVendor, message: "Vendor created" });
+    const newVendor = await insertVendor(createNewVendor)
     console.log(newVendor);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({ error: "something went wrong" });
-  }
+    return { message:messages.created, data:newVendor}
 };
 
-export const getVendors = async (req: Request, res: Response) => {
-  const vendors = await Vendor.find({});
+export const getVendors = async () => {
+  const vendors = await getAllVendors();
+  
+  return {vendors};
+}
 
-  res.status(200).send(vendors);
-};
+export const getVendorProfile = async ( id: string):Promise<createNewVendorResponse> => {
 
-export const getVendor = async (req: Request, res: Response, next:NextFunction) => {
-  try {
-    const id = req.params._id;
-    const vendor = await Vendor.findOne({ id });
+    const vendor = await getVendorById( id );
 
-   
     if (!vendor) {
-      res.status(404).send({ message: "Vendor not found" });
+      return {message: messages.notFound};
     }
-    res.status(200).send({ data: vendor });
-  } catch (error) {
-    next(error);
-  }
-};
+   
+    return {message: messages.found, data:vendor}
 
-export const updateVendor = async (req: Request, res: Response) => {
-  try {
-    const vendor = Vendor.findOneAndUpdate(
-      { id: req.params._id },
-      req.body,
-      { new: true },
-      (err, vendor) => {
-        if (err) {
-          res.status(404).send({ message: "Vendor not found" });
-        }
-        res.status(200).send({ data: vendor });
+}
+
+export const updateVendorProfile = async (id:string,updateVendorDetails:updateVendorDetails):Promise<createNewVendorResponse> => {
+  
+    const vendor = await updateVendor(id,updateVendorDetails);
+      if (!vendor) {
+        return {message: messages.notFound};
       }
-    );
-  } catch (error) {
-    res.status(500).send({ message: "Something went wrong,try again" });
-  }
-};
+      return {message: messages.updated, data:vendor}
+    
 
-export const deleteVendor = async (req: Request, res: Response) => {
-  try {
-    const vendor = await Vendor.deleteOne({ id: req.params._id });
-    if (!Vendor) {
-      res.status(404).send({ message: "Vendor not found" });
+}
+
+export const deleteVendorProfile = async (id:string):Promise<createNewVendorResponse> => {
+
+    const vendor = await deleteVendor(id);
+    if (!vendor) {
+      return {message: messages.notFound};
     }
-    res
-      .status(200)
-      .send({ data: vendor, message: "Vendor successfully deleted!" });
-  } catch (error) {
-    res.status(500).send({ message: "Something went wrong,try again" });
-  }
-};
+   return {message: messages.deleted, data:vendor}
+
+}

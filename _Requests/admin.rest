@@ -3,10 +3,10 @@ POST http://localhost:3000/api/v1/Admin/new_admin
 Content-Type: application/json
 
 {
-  "email": "admin@mail.com",
-  "firstName": "admin",
+  "email": "admin2@mail.com",
+  "firstName": "admin2",
   "lastName": "tester",
-  "contact": "0974923301"
+   "contact": "0974923301"
  
 }
 
@@ -15,3 +15,15 @@ GET http://localhost:3000/api/v1/Admin/view_admins
 
 ###
 GET http://localhost:3000/api/v1/Admin/view_admin/626eecdc1389b15e6b24382d
+
+###
+PUT http://localhost:3000/api/v1/Admin//edit_admin/626eecdc1389b15e6b24382d
+Content-Type: application/json
+
+{
+  "email": "admin@mail.com",
+  "firstName": "jake",
+  "lastName": "black",
+   "contact": "0974923301"
+ 
+}
